@@ -59,7 +59,7 @@ case $1 in
 
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/gitignore/.gitignore.wp -o .gitignore
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htaccess.wp -o .htaccess
-    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wp -o .htpasswd
+    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
 
     open "http://$PROJECT_DOMAIN"
     ;;
