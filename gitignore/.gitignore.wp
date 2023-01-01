@@ -2,6 +2,8 @@
 .DS_Store
 
 *.log
+db.sql.gz
+db.sql
 
 !wp-content
 wp-content/*
