@@ -1,0 +1,13 @@
+.vscode
+.DS_Store
+
+*.log
+
+!wp-content
+wp-content/*
+!wp-content/mu-plugins/
+!wp-content/plugins/
+!wp-content/themes/
+!wp-content/index.php
+
+node_modules
