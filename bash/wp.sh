@@ -34,7 +34,7 @@ case $1 in
 
     ADMIN_LOGIN=${ADMIN_LOGIN:-"webmaster"}
     ADMIN_PASS=${ADMIN_PASS:-"test1234"}
-    ADMIN_EMAIL=${ADMIN_EMAIL:-"acmin@acme.test"}
+    ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@acme.test"}
 
     echo
 
@@ -62,6 +62,16 @@ case $1 in
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
 
     open "http://$PROJECT_DOMAIN"
+    ;;
+
+  "db:export")
+    mysqldump --user=root --password=root --host=127.0.0.1 acme | gzip > db.sql.gz
+    ;;
+
+  "db:import")
+    gzip -d db.sql.gz
+    mysql --user=root --password=root --host=127.0.0.1 acme < db.sql
+    rm db.sql
     ;;
 
   *)
