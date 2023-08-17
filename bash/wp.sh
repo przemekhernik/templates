@@ -36,6 +36,7 @@ function db:export:staging() {
 }
 
 function db:import() {
+  wp db reset --yes
   gzip -d db.sql.gz
   wp db import db.sql
   rm db.sql
