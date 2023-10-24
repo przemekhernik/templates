@@ -66,7 +66,7 @@ function wp:init() {
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htaccess.wp -o .htaccess
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
 
-    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
+    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST:$DB_PORT --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
     wp config set WP_DEBUG true --raw
     wp config set WP_DEBUG_DISPLAY true --raw
     wp config set WP_DEBUG_LOG true --raw
