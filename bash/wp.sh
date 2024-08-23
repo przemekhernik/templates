@@ -57,6 +57,31 @@ function wp:env() {
   curl https://raw.githubusercontent.com/przemekhernik/templates/main/bash/.env -o .env
 }
 
+function wp:config() {
+  curl https://raw.githubusercontent.com/przemekhernik/templates/main/wordpress/wp-config-db.php -o wp-config-db.php
+}
+
+function wp:plugin() {
+  git clone git@github.com:przemekhernik/theme.wp.git wp-content/plugins/pluginwp
+  cd wp-content/plugins/pluginwp
+  rm -rf .git
+  composer install
+  yarn
+  yarn build
+  cd ../../..
+}
+
+function wp:theme() {
+  git clone git@github.com:przemekhernik/theme.wp.git wp-content/themes/themewp
+  rm -rf wp-content/themes/themewp/.git
+  cd wp-content/themes/themewp
+  rm -rf .git
+  composer install
+  yarn
+  yarn build
+  cd ../../..
+}
+
 function wp:init() {
   read -p "Are you sure? (y/n) " choice
   if [ "$choice" == "y" ]
@@ -64,7 +89,7 @@ function wp:init() {
     wp core download
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/gitignore/.gitignore.wp -o .gitignore
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htaccess.wp -o .htaccess
-    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
+    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wp -o .htpasswd
 
     wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST:$DB_PORT --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
     wp config set WP_DEBUG true --raw
@@ -134,6 +159,18 @@ case $1 in
 
   "wp:env")
     wp:env
+    ;;
+
+  "wp:config")
+    wp:config
+    ;;
+
+  "wp:plugin")
+    wp:plugin
+    ;;
+
+  "wp:theme")
+    wp:theme
     ;;
   
   "wp:init")
