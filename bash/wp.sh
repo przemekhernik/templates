@@ -36,7 +36,6 @@ function db:export:staging() {
 }
 
 function db:import() {
-  wp db reset --yes
   gzip -d db.sql.gz
   wp db import db.sql
   rm db.sql
@@ -53,33 +52,12 @@ function db:import:staging() {
   wp search-replace $DOMAIN_STAGING $DOMAIN_LOCAL --all-tables
 }
 
-function wp:env() {
-  curl https://raw.githubusercontent.com/przemekhernik/templates/main/bash/.env -o .env
-}
-
 function wp:config() {
   curl https://raw.githubusercontent.com/przemekhernik/templates/main/wordpress/wp-config-db.php -o wp-config-db.php
 }
 
-function wp:plugin() {
-  git clone git@github.com:przemekhernik/theme.wp.git wp-content/plugins/pluginwp
-  cd wp-content/plugins/pluginwp
-  rm -rf .git
-  composer install
-  yarn
-  yarn build
-  cd ../../..
-}
-
-function wp:theme() {
-  git clone git@github.com:przemekhernik/theme.wp.git wp-content/themes/themewp
-  rm -rf wp-content/themes/themewp/.git
-  cd wp-content/themes/themewp
-  rm -rf .git
-  composer install
-  yarn
-  yarn build
-  cd ../../..
+function wp:env() {
+  curl https://raw.githubusercontent.com/przemekhernik/templates/main/bash/.env -o .env
 }
 
 function wp:init() {
@@ -89,9 +67,9 @@ function wp:init() {
     wp core download
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/gitignore/.gitignore.wp -o .gitignore
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htaccess.wp -o .htaccess
-    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wp -o .htpasswd
+    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
 
-    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST:$DB_PORT --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
+    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
     wp config set WP_DEBUG true --raw
     wp config set WP_DEBUG_DISPLAY true --raw
     wp config set WP_DEBUG_LOG true --raw
@@ -157,20 +135,12 @@ case $1 in
     db:import:staging
     ;;
 
-  "wp:env")
-    wp:env
-    ;;
-
   "wp:config")
     wp:config
     ;;
 
-  "wp:plugin")
-    wp:plugin
-    ;;
-
-  "wp:theme")
-    wp:theme
+  "wp:env")
+    wp:env
     ;;
   
   "wp:init")
