@@ -67,9 +67,9 @@ function wp:init() {
     wp core download
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/gitignore/.gitignore.wp -o .gitignore
     curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htaccess.wp -o .htaccess
-    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wpt -o .htpasswd
+    curl https://raw.githubusercontent.com/przemekhernik/templates/main/htaccess/.htpasswd.wp -o .htpasswd
 
-    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
+    wp config create --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST:$DB_PORT --dbcharset=utf8mb4 --dbcollate=utf8mb4_general_ci
     wp config set WP_DEBUG true --raw
     wp config set WP_DEBUG_DISPLAY true --raw
     wp config set WP_DEBUG_LOG true --raw
@@ -87,7 +87,6 @@ function wp:init() {
     wp plugin delete hello akismet
     wp theme activate twentytwentyone
     wp theme delete twentytwentytwo twentytwentythree
-    wp plugin install wordpress-seo
     wp comment delete 1 --force
     wp menu create "Primary"
     wp menu create "Secondary"
