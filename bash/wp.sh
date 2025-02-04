@@ -60,6 +60,10 @@ function wp:env() {
   curl https://raw.githubusercontent.com/przemekhernik/templates/main/bash/.env -o .env
 }
 
+function wp:phpcs() {
+  curl https://raw.githubusercontent.com/przemekhernik/templates/refs/heads/main/wordpress/phpcs.xml.dist -o phpcs.xml.dist
+}
+
 function wp:init() {
   read -p "Are you sure? (y/n) " choice
   if [ "$choice" == "y" ]
@@ -85,14 +89,13 @@ function wp:init() {
     wp post update 2 --post_title=Homepage --post_name=homepage
     wp term update category 1 --name=News --slug=news
     wp plugin delete hello akismet
-    wp theme activate twentytwentyone
-    wp theme delete twentytwentytwo twentytwentythree
+    wp theme activate twentytwentyfive
+    wp theme delete twentytwentyfour
     wp comment delete 1 --force
     wp menu create "Primary"
     wp menu create "Secondary"
     wp menu create "Footer"
     wp widget reset --all
-    wp widget delete $(wp widget list wp_inactive_widgets --format=ids)
     wp rewrite structure '/%postname%/'
     wp option set blog_public 0
     wp option update show_on_front page
@@ -140,6 +143,10 @@ case $1 in
 
   "wp:env")
     wp:env
+    ;;
+
+  "wp:phpcs")
+    wp:phpcs
     ;;
   
   "wp:init")
