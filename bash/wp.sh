@@ -36,10 +36,15 @@ function db:export:staging() {
 }
 
 function db:import() {
-  wp db reset --yes
-  gzip -d db.sql.gz
-  wp db import db.sql
-  rm db.sql
+  if [[ -f "db.sql.gz" ]]; then
+    gzip -d db.sql.gz
+  fi
+
+  if [[ -f "db.sql" ]]; then
+    wp db reset --yes
+    wp db import db.sql
+    rm db.sql
+  fi
 }
 
 function db:import:prod() {
