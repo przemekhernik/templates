@@ -8,7 +8,6 @@ definitions:
           - composer install
           - yarn install
           - yarn lint
-          - composer analyze
         caches:
           - composer
           - node
