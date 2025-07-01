@@ -85,6 +85,10 @@ function wp:phpcs() {
   curl https://raw.githubusercontent.com/przemekhernik/templates/refs/heads/main/wordpress/phpcs.xml.dist -o phpcs.xml.dist
 }
 
+function wp:pipelines() {
+  curl https://raw.githubusercontent.com/przemekhernik/templates/refs/heads/main/ci/bitbucket-pipelines.yml -o bitbucket-pipelines.yml
+}
+
 function wp:init() {
   read -p "Are you sure? (y/n) " choice
   if [ "$choice" == "y" ]
@@ -170,6 +174,10 @@ case $1 in
 
   "wp:phpcs")
     wp:phpcs
+    ;;
+
+  "wp:pipelines")
+    wp:pipelines
     ;;
   
   "wp:init")
