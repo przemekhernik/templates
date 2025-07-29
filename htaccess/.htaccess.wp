@@ -1,22 +1,21 @@
 RewriteEngine On
 
 # BASIC | Redirect to https
-<IfModule _mod_rewrite.c>	
+<IfModule mod_rewrite.c>	
     RewriteCond %{HTTPS} off
-    RewriteCond %{HTTP_HOST} !^(.*)\.test$
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# BASIC | Redirect to www
-<IfModule _mod_rewrite.c>
-    RewriteCond %{HTTP_HOST} ^project.test [NC]
-    RewriteRule ^(.*)$ https://www.project.test/$1 [L,R=301]
+# BASIC | Redirect to non www
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTP_HOST} ^www.example.com [NC]
+    RewriteRule ^(.*)$ https://example.com/$1 [L,R=301]
 </IfModule>
 
 # BASIC | Redirect images for local env
-<IfModule mod_rewrite.c>
-    RewriteCond %{HTTP_HOST} ^project.test
-    RewriteRule ^(.*)\/uploads\/(.*)$ https://project.prod/$1/uploads/$2 [L,R=301,NC]
+<IfModule _mod_rewrite.c>
+    RewriteCond %{HTTP_HOST} ^example.test
+    RewriteRule ^(.*)\/uploads\/(.*)$ https://example.com/$1/uploads/$2 [L,R=301,NC]
 </IfModule>
 
 # SECURITY | BasicAuth
@@ -175,7 +174,7 @@ Options -Indexes
 </IfModule>
 
 # CACHING | Expiry Dates | https://web.dev/uses-long-cache-ttl/
-<IfModule _mod_expires.c>
+<IfModule mod_expires.c>
     #ExpiresActive on
     #ExpiresDefault  "access plus 1 month"
 
@@ -236,7 +235,7 @@ Options -Indexes
 </IfModule>
 
 # CACHING | Cache Control
-<IfModule _mod_headers.c> 
+<IfModule mod_headers.c> 
     Header append Cache-Control "public"
 
     <FilesMatch "\.(ico|pdf|flv|swf|js|css|svg|gif|png|jpg|jpeg|webp|txt|ttf|otf|eot|woff2|woff)$">
@@ -249,7 +248,7 @@ Options -Indexes
 </IfModule>
 
 # CACHING | GZIP Compression
-<IfModule _mod_deflate.c>
+<IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/plain
     AddOutputFilterByType DEFLATE text/html
     AddOutputFilterByType DEFLATE text/xml
